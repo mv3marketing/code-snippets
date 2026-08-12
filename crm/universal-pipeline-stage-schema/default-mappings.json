@@ -1,0 +1,39 @@
+{
+  "_note": "These are each platform's out-of-the-box DEFAULT pipeline stages, not a guarantee of what any specific real account has today. Nearly every real CRM instance customizes its stage names, order, or count. Always confirm against the account's actual pipeline configuration before trusting these defaults, and supply a custom mapping via mapper.js's customMapping parameter when they differ.",
+  "_sources": [
+    "Salesforce: standard Opportunity stages include Prospecting, Qualification, Proposal/Price Quote, Closed Won/Lost (per Salesforce's own documentation and setup guides).",
+    "HubSpot: default deal pipeline ships with 7 stages: Appointment Scheduled (20%), Qualified To Buy (40%), Presentation Scheduled (60%), Decision Maker Bought-In (80%), Contract Sent (90%), Closed Won (100%), Closed Lost (0%). Source: HubSpot Knowledge Base, 'Set up and manage object pipelines'.",
+    "Pipedrive: default pipeline ships with stages including Qualified, Contact Made, Demo Scheduled, Proposal Made, Negotiations Started, plus Won/Lost as terminal states. Source: Pipedrive Support, 'Pipeline: how to design your sales process'."
+  ],
+  "salesforce": {
+    "Prospecting": "prospecting",
+    "Qualification": "qualification",
+    "Needs Analysis": "needs_analysis",
+    "Value Proposition": "needs_analysis",
+    "Id. Decision Makers": "needs_analysis",
+    "Perception Analysis": "proposal",
+    "Proposal/Price Quote": "proposal",
+    "Negotiation/Review": "negotiation",
+    "Closed Won": "closed_won",
+    "Closed Lost": "closed_lost"
+  },
+  "hubspot": {
+    "Appointment Scheduled": "prospecting",
+    "Qualified To Buy": "qualification",
+    "Presentation Scheduled": "needs_analysis",
+    "Decision Maker Bought-In": "proposal",
+    "Contract Sent": "negotiation",
+    "Closed Won": "closed_won",
+    "Closed Lost": "closed_lost"
+  },
+  "pipedrive": {
+    "Lead In": "prospecting",
+    "Qualified": "qualification",
+    "Contact Made": "qualification",
+    "Demo Scheduled": "needs_analysis",
+    "Proposal Made": "proposal",
+    "Negotiations Started": "negotiation",
+    "Won": "closed_won",
+    "Lost": "closed_lost"
+  }
+}

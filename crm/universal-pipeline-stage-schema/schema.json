@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.mv3marketing.com/schemas/universal-pipeline-stage.json",
+  "title": "Universal Pipeline Stage",
+  "description": "CRM-agnostic canonical deal-stage schema. Every CRM names its stages differently; this is the normalized shape other tools (dashboards, scoring skills, reporting) can build against without caring whether the source is Salesforce, HubSpot, or Pipedrive.",
+  "type": "object",
+  "required": ["deal_id", "source_crm", "native_stage", "canonical_stage"],
+  "properties": {
+    "deal_id": { "type": "string", "minLength": 1, "description": "The deal/opportunity ID in its source CRM." },
+    "source_crm": { "type": "string", "enum": ["salesforce", "hubspot", "pipedrive", "other"] },
+    "native_stage": { "type": "string", "minLength": 1, "description": "The exact stage name/label as it appears in the source CRM, unmodified." },
+    "canonical_stage": {
+      "type": "string",
+      "enum": ["prospecting", "qualification", "needs_analysis", "proposal", "negotiation", "closed_won", "closed_lost"],
+      "description": "The normalized stage bucket. See canonical-stages.json for what each bucket means."
+    },
+    "probability": { "type": "number", "minimum": 0, "maximum": 100, "description": "Optional win probability, 0-100, if the source CRM provides one." },
+    "is_closed": { "type": "boolean", "description": "True for closed_won or closed_lost." },
+    "is_won": { "type": "boolean", "description": "True only for closed_won." },
+    "mapped_via": {
+      "type": "string",
+      "enum": ["default", "custom"],
+      "description": "Whether this mapping used the shipped default-mappings.json for the source CRM, or a custom mapping the caller supplied. Real orgs almost always customize their pipeline, so 'custom' should be the common case in production use."
+    }
+  },
+  "additionalProperties": false
+}
