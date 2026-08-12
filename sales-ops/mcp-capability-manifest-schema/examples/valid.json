@@ -1,0 +1,12 @@
+{
+  "server_id": "salesloft-prod-1",
+  "platform": "Salesloft",
+  "status": "connected",
+  "priority": 1,
+  "capabilities": [
+    { "name": "sequence.add", "required_scope": "write" },
+    { "name": "contact.enrich", "required_scope": "read" }
+  ],
+  "rate_limit": { "window_seconds": 60, "max_calls": 200 },
+  "usage_this_window": 12
+}

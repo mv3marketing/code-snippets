@@ -1,0 +1,10 @@
+{
+  "_note": "Intentionally invalid — used by test.js to verify validate.js actually rejects bad input, not just accepts everything.",
+  "server_id": "",
+  "platform": "Some Platform",
+  "status": "connecting",
+  "capabilities": [
+    { "name": "BadCapabilityName", "required_scope": "super-admin" }
+  ],
+  "usage_this_window": -5
+}

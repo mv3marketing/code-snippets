@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.mv3marketing.com/schemas/mcp-capability-manifest.json",
+  "title": "MCP Capability Manifest",
+  "description": "Canonical, platform-agnostic schema for describing a connected MCP server's capabilities, scope tiers, and live rate-limit usage. Used by the Sales Stack Router skill, but intentionally generic enough for any multi-MCP-server orchestration, not just sales-engagement tools.",
+  "type": "object",
+  "required": ["server_id", "platform", "status", "capabilities"],
+  "properties": {
+    "server_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this connected server instance, e.g. 'outreach-prod-1'."
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable platform name, e.g. 'Outreach.io'."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["connected", "degraded", "disconnected"],
+      "description": "Live connection health. Only 'connected' servers should ever be routed to."
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Lower = preferred when multiple servers can fulfill the same request. Optional."
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "required_scope"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$",
+            "description": "Dot-namespaced capability name, e.g. 'contact.enrich', 'sequence.add'."
+          },
+          "required_scope": {
+            "type": "string",
+            "enum": ["read", "write", "destructive"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rate_limit": {
+      "type": "object",
+      "description": "Optional. NEVER hardcode a vendor's advertised limit here without checking the account's real plan — advertised limits vary by tier and change over time.",
+      "required": ["window_seconds", "max_calls"],
+      "properties": {
+        "window_seconds": { "type": "integer", "exclusiveMinimum": 0 },
+        "max_calls": { "type": "integer", "exclusiveMinimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "usage_this_window": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Caller-supplied live count of calls already made in the current rate-limit window. Must be fresh — this schema does not track state."
+    }
+  },
+  "additionalProperties": false
+}
