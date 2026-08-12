@@ -1,0 +1,32 @@
+[
+  {
+    "_case": "clear hot lead — confirmed budget, real decision maker, urgent, fast timeline",
+    "input": { "budget_confirmed": true, "authority_level": "decision_maker", "need_severity": 9, "timeline_days": 14 },
+    "expected_tier": "hot",
+    "expected_action": "route_to_rep"
+  },
+  {
+    "_case": "warm lead — influencer with real budget, moderate urgency, mid timeline",
+    "input": { "budget_confirmed": true, "authority_level": "influencer", "need_severity": 6, "timeline_days": 60 },
+    "expected_tier": "warm",
+    "expected_action": "route_to_rep"
+  },
+  {
+    "_case": "cool lead — no confirmed budget, unknown authority, some urgency",
+    "input": { "budget_confirmed": false, "authority_level": "unknown", "need_severity": 5, "timeline_days": 45 },
+    "expected_tier": "cool",
+    "expected_action": "nurture_sequence"
+  },
+  {
+    "_case": "cold lead — no budget, unknown authority, low urgency, distant timeline",
+    "input": { "budget_confirmed": false, "authority_level": "unknown", "need_severity": 2, "timeline_days": 365 },
+    "expected_tier": "cold",
+    "expected_action": "disqualify"
+  },
+  {
+    "_case": "edge — decision maker but zero urgency and no budget still lands cool, not hot (title alone isn't enough)",
+    "input": { "budget_confirmed": false, "authority_level": "decision_maker", "need_severity": 1, "timeline_days": 300 },
+    "expected_tier": "cool",
+    "expected_action": "nurture_sequence"
+  }
+]

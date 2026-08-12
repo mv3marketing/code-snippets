@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/mv3marketing/code-snippets/main/lead-gen/bant-lead-qualification-schema/schema.json",
+  "title": "BANT Lead Qualification Schema",
+  "description": "Structured contract for scoring an inbound lead against Budget, Authority, Need, and Timeline before routing it to a sales rep or a nurture sequence.",
+  "type": "object",
+  "required": ["budget_confirmed", "authority_level", "need_severity", "timeline_days"],
+  "additionalProperties": false,
+  "properties": {
+    "budget_confirmed": {
+      "type": "boolean",
+      "description": "Whether the lead has explicitly confirmed allocated budget for this category, either in a form field, discovery-call transcript, or enrichment data. Do not infer this from company size alone."
+    },
+    "budget_range_usd": {
+      "type": "array",
+      "description": "Optional. [min, max] monthly or one-time budget range in USD, if disclosed. Omit entirely rather than guessing a range.",
+      "items": { "type": "number", "minimum": 0 },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "authority_level": {
+      "type": "string",
+      "description": "Decision-making power of the contact within their org, as stated or reasonably inferred from their title/role in the form or enrichment data.",
+      "enum": ["decision_maker", "influencer", "unknown"]
+    },
+    "need_severity": {
+      "type": "integer",
+      "description": "Self-reported or inferred urgency of the problem being solved. 1 = exploring options with no active pain; 10 = actively losing revenue/customers today because of this problem.",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "timeline_days": {
+      "type": "integer",
+      "description": "Number of days until the lead expects to make a decision or start implementation. Use a conservative estimate (round up) when the lead gives a vague answer like 'this quarter.'",
+      "minimum": 0
+    },
+    "points": {
+      "type": "integer",
+      "description": "OUTPUT field. Transparent point total (0-12) the reference scorer used to derive tier — kept in the output so you can audit/recalibrate thresholds later, not just trust a black-box label.",
+      "minimum": 0,
+      "maximum": 12
+    },
+    "tier": {
+      "type": "string",
+      "description": "OUTPUT field. Computed tier used for routing — do not set this manually; it should be derived by the scoring function below.",
+      "enum": ["hot", "warm", "cool", "cold"]
+    },
+    "recommended_action": {
+      "type": "string",
+      "description": "OUTPUT field. Recommended next action, derived from tier.",
+      "enum": ["route_to_rep", "nurture_sequence", "disqualify"]
+    }
+  }
+}

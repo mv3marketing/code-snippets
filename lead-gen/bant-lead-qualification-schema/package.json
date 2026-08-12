@@ -1,0 +1,9 @@
+{
+  "name": "bant-lead-qualification-schema",
+  "version": "1.0.0",
+  "description": "BANT lead qualification JSON Schema + reference scorer",
+  "main": "score.js",
+  "scripts": { "test": "node test.js" },
+  "devDependencies": { "ajv": "^8.20.0" },
+  "license": "MIT"
+}

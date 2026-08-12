@@ -1,0 +1,7 @@
+[
+  { "_case": "missing required timeline_days", "input": { "budget_confirmed": true, "authority_level": "decision_maker", "need_severity": 8 } },
+  { "_case": "authority_level not in enum", "input": { "budget_confirmed": true, "authority_level": "champion", "need_severity": 8, "timeline_days": 10 } },
+  { "_case": "need_severity out of 1-10 range", "input": { "budget_confirmed": true, "authority_level": "decision_maker", "need_severity": 15, "timeline_days": 10 } },
+  { "_case": "negative timeline_days", "input": { "budget_confirmed": true, "authority_level": "decision_maker", "need_severity": 8, "timeline_days": -5 } },
+  { "_case": "budget_confirmed as string instead of boolean", "input": { "budget_confirmed": "yes", "authority_level": "decision_maker", "need_severity": 8, "timeline_days": 10 } }
+]
